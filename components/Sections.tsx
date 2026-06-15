@@ -252,9 +252,13 @@ function Footer() {
           United States — <Clock />
         </span>
       </div>
-      <div className="top-link" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+      <button
+        type="button"
+        className="top-link"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
         Back to top <span>↑</span>
-      </div>
+      </button>
     </div>
   );
 }

@@ -14,8 +14,8 @@
   --line-soft: oklch(1 0 0 / 0.05);
   --text:      oklch(0.96 0.004 265);
   --dim:       oklch(0.72 0.008 265);
-  --faint:     oklch(0.55 0.01 265);
-  --ghost:     oklch(0.40 0.01 265);
+  --faint:     oklch(0.66 0.01 265); /* bumped from 0.55 for WCAG AA */
+  --ghost:     oklch(0.60 0.01 265); /* bumped from 0.40 for WCAG AA */
 
   /* accent — defaults to monochrome white, overridable via tweaks */
   --accent:    oklch(0.97 0 0);
@@ -55,8 +55,8 @@
   --line-soft: oklch(0.18 0.01 70 / 0.08);
   --text:      oklch(0.24 0.012 67);
   --dim:       oklch(0.43 0.012 67);
-  --faint:     oklch(0.55 0.012 70);
-  --ghost:     oklch(0.66 0.012 74);
+  --faint:     oklch(0.46 0.012 70); /* darkened from 0.55 for WCAG AA */
+  --ghost:     oklch(0.49 0.012 74); /* darkened from 0.66 for WCAG AA */
   --accent:    oklch(0.26 0.013 64);
   --accent-ink: oklch(0.95 0.01 83);
   --pill-bg:   oklch(0.945 0.012 83 / 0.78);
@@ -262,18 +262,21 @@ body.no-motion .nav-logo, body.no-motion .nav-links, body.no-motion .theme-toggl
 /* ---- Variant A: Editorial (dvdrod-inspired) ---- */
 .hero.heroA {
   flex-direction: column; align-items: stretch; justify-content: center;
-  padding-top: clamp(96px, 14vh, 140px); padding-bottom: clamp(18px, 4vh, 40px);
+  padding-top: clamp(76px, 10vh, 120px); padding-bottom: clamp(16px, 3vh, 36px);
   gap: 0;
 }
 .heroA-inner {
   width: 100%; flex: 1; max-width: none; padding-inline: clamp(14px, 2vw, 32px);
   display: flex; flex-direction: column; justify-content: center;
-  gap: clamp(22px, 3.4vh, 40px);
+  gap: clamp(14px, 2.2vh, 30px);
 }
 .heroA-role { margin-bottom: 4px; white-space: nowrap; }
 .heroA-name {
   font-family: var(--font-serif); font-weight: 400;
-  font-size: clamp(44px, 17vw, 300px); line-height: 0.92; letter-spacing: -0.015em;
+  /* cap by viewport HEIGHT too, so the full hero (name + lead + meta + CTAs +
+     marquee) always fits one screen on short/laptop viewports. 15vh keeps the
+     name large but leaves headroom for the rest of the hero at any height. */
+  font-size: clamp(40px, min(15vw, 15vh), 240px); line-height: 0.92; letter-spacing: -0.015em;
   color: var(--text);
 }
 .heroA-name .ln { display: block; white-space: nowrap; }
@@ -294,7 +297,7 @@ body.no-motion .nav-logo, body.no-motion .nav-links, body.no-motion .theme-toggl
 .heroA-meta .live { width: 7px; height: 7px; border-radius: 50%; background: oklch(0.8 0.17 150); box-shadow: 0 0 10px oklch(0.8 0.17 150); flex: none; }
 .heroA-marquee {
   width: 100%; border-top: 1px solid var(--line-soft); padding: 16px 0;
-  overflow: hidden; margin-top: clamp(26px, 4vh, 52px);
+  overflow: hidden; margin-top: clamp(14px, 2.2vh, 40px);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
           mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
@@ -495,7 +498,7 @@ body.no-motion .word-rise .w { opacity: 1; transform: none; transition: none; }
 
 .footer { padding: 30px var(--pad); border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .footer .ft { font-family: var(--font-mono); font-size: 12px; color: var(--ghost); }
-.footer .top-link { font-family: var(--font-mono); font-size: 12px; color: var(--dim); display:flex; align-items:center; gap: 8px; cursor: pointer; transition: color .25s, transform .4s var(--ease); }
+.footer .top-link { appearance: none; background: none; border: 0; padding: 0; font-family: var(--font-mono); font-size: 12px; color: var(--dim); display:flex; align-items:center; gap: 8px; cursor: pointer; transition: color .25s, transform .4s var(--ease); }
 .footer .top-link:hover { color: var(--text); }
 
 /* clock */
@@ -564,15 +567,23 @@ html { overflow-x: hidden; max-width: 100%; }
 /* tablet & below: ease the edge-to-edge serif name so the nowrap
    line keeps a safe margin and never clips "Reddy" */
 @media (max-width: 900px) {
-  .heroA-name { font-size: clamp(42px, 16vw, 150px); }
+  .heroA-name { font-size: clamp(40px, min(16vw, 17vh), 150px); }
 }
 @media (max-width: 720px) {
-  .heroA-name { font-size: clamp(40px, 15vw, 124px); line-height: 0.94; }
+  .heroA-name { font-size: clamp(36px, min(15vw, 16vh), 124px); line-height: 0.94; }
   .heroA-inner { padding-inline: clamp(16px, 4vw, 28px); }
 }
 @media (max-width: 460px) {
-  .heroA-name { font-size: clamp(38px, 15.5vw, 70px); }
+  .heroA-name { font-size: clamp(32px, min(15.5vw, 15vh), 70px); }
   .heroA-meta { gap: 14px 24px; }
+}
+/* very short viewports (landscape phones, split-screen): let the hero scroll
+   rather than clip, and shrink the name hard so the rest stays reachable */
+@media (max-height: 560px) {
+  .hero.heroA { min-height: auto; padding-top: clamp(64px, 12vh, 88px); }
+  .heroA-name { font-size: clamp(30px, 9vh, 96px); }
+  .about, .skills, .contact { min-height: auto; }
+  .exp .job, .projects .proj { min-height: auto; }
 }
 
 /* ultrawide: keep the full-bleed hero from drifting too far from the
@@ -583,3 +594,55 @@ html { overflow-x: hidden; max-width: 100%; }
 
 /* never let a stray long token (URL, email, tech name) force a scroll */
 .lead, .about-body p, .job li, .proj-main p, .contact .blurb, .heroA-meta .m { overflow-wrap: break-word; }
+
+/* ============================================================
+   SECTION SNAP SCROLLING (Apple-like, gentle)
+   The viewport eases onto the nearest section/subsection when the
+   scroll settles (proximity = never hijacks momentum). Self-contained
+   sections fill the screen with vertically-centred content; the tall
+   sections (Experience, Projects) step focus through each item.
+   Pure CSS — keyboard nav, anchor links, scroll-spy and the
+   reduced-motion overrides all keep working.
+   ============================================================ */
+html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+
+/* full-screen sections: fill the viewport, centre their content
+   (the fixed nav overlays the empty band at the top, never the content) */
+.hero, .about, .skills, .contact { scroll-snap-align: start; }
+.about, .skills, .contact {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* tall sections: each item (and the section title) is its own focus.
+   scroll-margin-top keeps a snapped item clear of the floating nav pill. */
+.exp .section-head, .projects .section-head,
+.exp .job, .projects .proj {
+  scroll-snap-align: start;
+  scroll-margin-top: 84px;
+}
+/* give each stepped item room to breathe so it reads as "in focus" */
+@media (min-width: 640px) {
+  .exp .job, .projects .proj { min-height: 72svh; align-content: center; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   Honour the OS "Reduce Motion" preference site-wide: neutralise
+   keyframe loops (marquee, pulse, blink, scroll hint) and reveal
+   transitions, and force revealed content visible immediately.
+   Placed last so it wins the cascade over the base animation rules.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .word-rise .w { opacity: 1 !important; transform: none !important; }
+  .heroA-name .ln > span { transform: none !important; }
+  .job ul li { opacity: 1 !important; transform: none !important; }
+  .nav-logo, .nav-links, .theme-toggle { opacity: 1 !important; }
+}

@@ -15,7 +15,10 @@ export function useReveal() {
       const vh = window.innerHeight;
       document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.top < vh * 0.92 && r.bottom > 0) el.classList.add("in");
+        // reveal anything whose top has entered the viewport — this also
+        // catches elements at the very bottom edge (e.g. the hero marquee on
+        // tall, full-height screens) that the old 0.92 margin missed.
+        if (r.top < vh && r.bottom > 0) el.classList.add("in");
       });
     };
     const raf = requestAnimationFrame(() => requestAnimationFrame(reveal));
