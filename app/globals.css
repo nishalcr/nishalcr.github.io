@@ -583,7 +583,6 @@ html { overflow-x: hidden; max-width: 100%; }
   .hero.heroA { min-height: auto; padding-top: clamp(64px, 12vh, 88px); }
   .heroA-name { font-size: clamp(30px, 9vh, 96px); }
   .about, .skills, .contact { min-height: auto; }
-  .exp .job, .projects .proj { min-height: auto; }
 }
 
 /* ultrawide: keep the full-bleed hero from drifting too far from the
@@ -599,8 +598,8 @@ html { overflow-x: hidden; max-width: 100%; }
    SECTION SNAP SCROLLING (Apple-like, gentle)
    The viewport eases onto the nearest section/subsection when the
    scroll settles (proximity = never hijacks momentum). Self-contained
-   sections fill the screen with vertically-centred content; the tall
-   sections (Experience, Projects) step focus through each item.
+   sections fill the screen with vertically-centred content; Experience and
+   Projects are each one compact section that snaps at the section level.
    Pure CSS — keyboard nav, anchor links, scroll-spy and the
    reduced-motion overrides all keep working.
    ============================================================ */
@@ -614,17 +613,10 @@ html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
   display: flex; flex-direction: column; justify-content: center;
 }
 
-/* tall sections: each item (and the section title) is its own focus.
-   scroll-margin-top keeps a snapped item clear of the floating nav pill. */
-.exp .section-head, .projects .section-head,
-.exp .job, .projects .proj {
-  scroll-snap-align: start;
-  scroll-margin-top: 84px;
-}
-/* give each stepped item room to breathe so it reads as "in focus" */
-@media (min-width: 640px) {
-  .exp .job, .projects .proj { min-height: 72svh; align-content: center; }
-}
+/* Experience & Projects: each is ONE section (a compact list), snapping at the
+   section level rather than per item — keeps the page from getting too long.
+   Extra top padding keeps the heading clear of the floating nav pill on snap. */
+.exp, .projects { scroll-snap-align: start; padding-top: clamp(88px, 12vh, 120px); }
 
 /* ============================================================
    REDUCED MOTION
