@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { PORTFOLIO as PD } from "@/lib/data";
 
 function About() {
@@ -178,31 +178,6 @@ function Skills() {
   );
 }
 
-function Clock() {
-  const [t, setT] = useState("");
-  useEffect(() => {
-    const tick = () => {
-      try {
-        setT(
-          new Intl.DateTimeFormat("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false,
-            timeZone: "America/Phoenix",
-          }).format(new Date())
-        );
-      } catch {
-        setT(new Date().toLocaleTimeString());
-      }
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return <span className="clock">{t}</span>;
-}
-
 function Contact() {
   return (
     <section className="contact" id="contact">
@@ -248,9 +223,7 @@ function Footer() {
     <div className="footer">
       <div className="ft">© 2026 Nishal Chandra Reddy</div>
       <div className="ft" style={{ display: "flex", gap: 18, alignItems: "center" }}>
-        <span>
-          United States — <Clock />
-        </span>
+        <span>United States</span>
       </div>
       <button
         type="button"
