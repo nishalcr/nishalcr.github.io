@@ -8,4 +8,4 @@
      no code change needed. If you want canonical to point at the pages.dev
      URL while you wait, just edit this ONE line.
    ------------------------------------------------------------------ */
-export const SITE_URL = "https://nishalcr.is-a.dev";
+export const SITE_URL = "https://nishalcr.pages.dev";

@@ -9,7 +9,7 @@ respects `prefers-reduced-motion` — all shipped as plain HTML/CSS/JS.
 [![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6.svg)](https://www.typescriptlang.org)
 
-**Live:** https://nishalcr.is-a.dev
+**Live:** https://nishalcr.pages.dev
 
 ![Portfolio — dark theme](.github/assets/preview-dark.png)
 
