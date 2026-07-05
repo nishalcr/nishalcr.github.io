@@ -1,0 +1,42 @@
+name: Deploy to Cloudflare Pages
+
+# Builds the static export and deploys it to Cloudflare Pages on every push to
+# master (and on manual dispatch). Requires two repo secrets:
+#   CLOUDFLARE_API_TOKEN  — a token with the "Cloudflare Pages: Edit" permission
+#   CLOUDFLARE_ACCOUNT_ID — your Cloudflare account id
+# See DEPLOY.md for how to create both (and the one-time project-create note).
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        # Pinned to a commit SHA (v3) for supply-chain safety; Dependabot bumps it.
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # A push to master deploys production; a manual run from another branch
+          # deploys a preview (Cloudflare treats master as the production branch).
+          # First-time setup may need a one-time project create — see DEPLOY.md.
+          command: pages deploy out --project-name=nishalcr-portfolio --branch=${{ github.ref_name }}

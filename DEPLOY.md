@@ -36,6 +36,40 @@ Within ~1–2 minutes you have an **instant, shareable URL** like
 | **Vercel** | `*.vercel.app` | Best Next DX; hobby tier is non-commercial only |
 | **Netlify** | `*.netlify.app` | Build `npx next build`, publish `out` |
 
+## 2b. Alternative: automated CI deploy (already wired up)
+
+`.github/workflows/deploy.yml` builds and deploys to Cloudflare Pages on every
+push to `master` — **no dashboard Git integration needed**. Use this OR the
+dashboard connect in step 2, not both. To enable it, add two repo secrets:
+
+1. **Create a Cloudflare API token** — dash.cloudflare.com → **My Profile →
+   API Tokens → Create Token** → use the **"Cloudflare Pages — Edit"** template →
+   Create. Copy the token.
+2. **Find your Account ID** — dash.cloudflare.com → **Workers & Pages** → the
+   **Account ID** is shown on the right (also in the dashboard URL).
+3. **Add both as GitHub secrets** (values are prompted, never echoed):
+
+   ```bash
+   gh secret set CLOUDFLARE_API_TOKEN     # paste the token
+   gh secret set CLOUDFLARE_ACCOUNT_ID    # paste the account id
+   ```
+
+   (Or GitHub → repo **Settings → Secrets and variables → Actions → New secret**.)
+
+The next push to `master` — or **Actions → Deploy to Cloudflare Pages → Run
+workflow** — deploys to `https://nishalcr-portfolio.pages.dev`.
+
+> **If the first run errors with "project not found",** create the project once,
+> then re-run the workflow:
+> ```bash
+> npx wrangler pages project create nishalcr-portfolio --production-branch=master
+> ```
+> (or dashboard → **Workers & Pages → Create → Pages → Direct Upload**, name it
+> `nishalcr-portfolio`). Later runs deploy into it normally.
+
+> **Tip:** add the secrets *before* merging this workflow so the first
+> `master` deploy (the merge commit itself) is green rather than a red run.
+
 ## 3. Claim the free `is-a.dev` subdomain (runs in parallel — takes hours–days to merge)
 
 `is-a.dev` is PR-reviewed, so open it early. It's **not instant**, but your
