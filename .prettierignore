@@ -1,0 +1,13 @@
+.next
+out
+node_modules
+package-lock.json
+public
+*.pdf
+
+# globals.css is authored in an intentional dense style — leave it as-is
+# rather than reflow ~640 lines.
+*.css
+
+# Owned by the Cloudflare deploy PR; excluded here to avoid merge churn.
+DEPLOY.md
