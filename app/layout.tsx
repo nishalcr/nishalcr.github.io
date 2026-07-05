@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Manrope, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { PORTFOLIO as P } from "@/lib/data";
+import { SITE_URL } from "@/lib/site";
 
-// NOTE: update this to the real deployed domain — it makes OG/Twitter image
-// URLs absolute (required by most social scrapers) and feeds the JSON-LD url.
-const SITE_URL = "https://nishalcr.dev";
+// Self-hosted at build time (no render-blocking Google Fonts request, no layout
+// shift). These expose CSS variables consumed by globals.css.
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-manrope", display: "swap" });
+const instrumentSerif = Instrument_Serif({ subsets: ["latin"], weight: "400", variable: "--font-instrument", display: "swap" });
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap" });
 
 const title = `${P.name} — ${P.role}`;
 const description =
@@ -63,13 +67,18 @@ const themeScript = `(function(){try{var t=localStorage.getItem('ncr-theme')||'d
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${manrope.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+    >
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
         />
+        <a href="#main" className="skip-link">Skip to content</a>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

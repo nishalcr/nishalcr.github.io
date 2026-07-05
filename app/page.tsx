@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <Progress />
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Experience />

@@ -3,6 +3,18 @@
 import { Fragment } from "react";
 import { PORTFOLIO as PD } from "@/lib/data";
 
+/* Render **bold** spans as real React nodes — safe (no dangerouslySetInnerHTML),
+   and lets content in data.ts stay plain text. */
+function RichText({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+        i % 2 === 1 ? <b key={i}>{part}</b> : <Fragment key={i}>{part}</Fragment>
+      )}
+    </>
+  );
+}
+
 function About() {
   return (
     <section className="about" id="about">
@@ -24,7 +36,9 @@ function About() {
             </p>
             <div className="about-body" style={{ marginTop: 36 }}>
               {PD.about.body.map((p, i) => (
-                <p key={i} className={"reveal d" + (i + 1)} dangerouslySetInnerHTML={{ __html: p }} />
+                <p key={i} className={"reveal d" + (i + 1)}>
+                  <RichText text={p} />
+                </p>
               ))}
             </div>
           </div>
@@ -94,7 +108,9 @@ function Experience() {
                 </h3>
                 <ul>
                   {job.points.map((pt, j) => (
-                    <li key={j} dangerouslySetInnerHTML={{ __html: pt }} />
+                    <li key={j}>
+                      <RichText text={pt} />
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -119,18 +135,22 @@ function Projects() {
             <div className="proj reveal" key={i}>
               <div className="proj-idx">/{String(i + 1).padStart(2, "0")}</div>
               <div className="proj-main">
-                <h3>{pr.title}</h3>
+                <h3>
+                  {pr.repo ? (
+                    <a href={pr.repo} target="_blank" rel="noopener noreferrer" data-cursor="GitHub">
+                      {pr.title}
+                    </a>
+                  ) : (
+                    pr.title
+                  )}
+                </h3>
                 <span className="yr">{pr.year}</span>
                 <p>{pr.desc}</p>
                 <div className="metrics">
                   {pr.metrics.map((m, j) => (
-                    <span
-                      className="metric"
-                      key={j}
-                      dangerouslySetInnerHTML={{
-                        __html: m.t.replace(/([\d.]+%?|sub-\d+ms|99\.99%|5×)/g, "<b>$1</b>"),
-                      }}
-                    />
+                    <span className="metric" key={j}>
+                      <RichText text={m} />
+                    </span>
                   ))}
                 </div>
               </div>
@@ -141,7 +161,18 @@ function Projects() {
                   </span>
                 ))}
               </div>
-              <div className="proj-arrow">↗</div>
+              {pr.repo ? (
+                <a
+                  className="proj-arrow"
+                  href={pr.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${pr.title} — view source on GitHub`}
+                  data-cursor="GitHub"
+                >
+                  ↗
+                </a>
+              ) : null}
             </div>
           ))}
         </div>

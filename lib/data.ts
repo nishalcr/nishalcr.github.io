@@ -1,9 +1,15 @@
-/* Résumé data — Nishal Chandra Reddy */
-
-export interface MetaItem {
-  k: string;
-  v: string;
-}
+/* ==================================================================
+   THE ONLY FILE YOU EDIT TO CHANGE SITE CONTENT.
+   ------------------------------------------------------------------
+   How to update things:
+   - Text/bullets: just edit the strings. Wrap a phrase in **double
+     asterisks** to make it bold (e.g. "cut cost by **40%**"). No HTML,
+     no escaping — a stray character can't break the build.
+   - Resume: drop your new PDF at  public/resume.pdf  (overwrite it).
+     Nothing here changes — the path below is already stable.
+   - A project's link: set `repo` (and/or `demo`) to a URL. Leave them
+     off and the card simply renders without a link/arrow.
+   ================================================================== */
 
 export interface About {
   lead: string;
@@ -15,18 +21,16 @@ export interface Job {
   company: string;
   loc: string;
   when: string;
-  points: string[];
-}
-
-export interface ProjectMetric {
-  t: string;
+  points: string[]; // use **bold** for emphasis
 }
 
 export interface Project {
   title: string;
   year: string;
   desc: string;
-  metrics: ProjectMetric[];
+  repo?: string; // optional GitHub URL — arrow links here when present
+  demo?: string; // optional live demo URL
+  metrics: string[]; // use **bold** for emphasis, e.g. "**99.99%** uptime"
   stack: string[];
 }
 
@@ -49,12 +53,10 @@ export interface Portfolio {
   role: string;
   role2: string;
   email: string;
-  phone: string;
   location: string;
   linkedin: string;
   github: string;
   resume: string;
-  meta: MetaItem[];
   about: About;
   experience: Job[];
   projects: Project[];
@@ -69,18 +71,10 @@ export const PORTFOLIO: Portfolio = {
   role: "Full Stack Developer",
   role2: "AI / ML Enthusiast",
   email: "nishalcr@gmail.com",
-  phone: "+1 602 393 8973",
   location: "United States",
   linkedin: "https://www.linkedin.com/in/nishalcr",
   github: "https://github.com/nishalcr",
-  resume: "/uploads/Resume_Nishal_C_R-e45ae100.pdf",
-
-  meta: [
-    { k: "Experience", v: "4 years" },
-    { k: "Focus", v: "Distributed systems · AI" },
-    { k: "Based in", v: "United States" },
-    { k: "Status", v: "Open to opportunities" },
-  ],
+  resume: "/resume.pdf",
 
   about: {
     lead: "Full Stack Developer with 4 years of experience architecting and shipping scalable web applications, microservices, and APIs — end to end.",
@@ -97,9 +91,9 @@ export const PORTFOLIO: Portfolio = {
       loc: "Remote · US",
       when: "Aug 2025 — Present",
       points: [
-        "Built and optimized scalable full-stack systems and RESTful APIs with <b>Node.js, React, MongoDB, AWS</b> and Cloudflare for seamless frontend–backend integration.",
+        "Built and optimized scalable full-stack systems and RESTful APIs with **Node.js, React, MongoDB, AWS** and Cloudflare for seamless frontend–backend integration.",
         "Integrated AI and LLM models to automate workflows and deliver personalized user experiences.",
-        "Architected cloud-native microservices for scalability and cost efficiency, cutting infrastructure spend by <b>25%</b>.",
+        "Architected cloud-native microservices for scalability and cost efficiency, cutting infrastructure spend by **25%**.",
         "Collaborated across functions to ship production-ready, user-centric solutions on schedule.",
       ],
     },
@@ -109,10 +103,10 @@ export const PORTFOLIO: Portfolio = {
       loc: "Bengaluru, India",
       when: "May 2021 — Jul 2023",
       points: [
-        "Directed a cross-functional team of five — mentoring, running architecture reviews, and aligning engineering with product, lifting velocity <b>25%</b> and code quality <b>30%</b>.",
-        "Led the architectural redesign of the MobiLytix Loyalty & Rewards platform with Domain-Driven Design, boosting throughput <b>60%</b> and feature delivery <b>35%</b>.",
-        "Architected event-driven <b>Kafka</b> pipelines reliably processing <b>700K+</b> daily transactions at sub-200ms latency, improving consistency <b>50%</b>.",
-        "Migrated on-prem infra to SaaS cloud on <b>AWS</b> with centralized ELK logging — cutting costs <b>40%</b> and speeding incident resolution <b>80%</b>.",
+        "Directed a cross-functional team of five — mentoring, running architecture reviews, and aligning engineering with product, lifting velocity **25%** and code quality **30%**.",
+        "Led the architectural redesign of the MobiLytix Loyalty & Rewards platform with Domain-Driven Design, boosting throughput **60%** and feature delivery **35%**.",
+        "Architected event-driven **Kafka** pipelines reliably processing **700K+** daily transactions at sub-200ms latency, improving consistency **50%**.",
+        "Migrated on-prem infra to SaaS cloud on **AWS** with centralized ELK logging — cutting costs **40%** and speeding incident resolution **80%**.",
       ],
     },
     {
@@ -121,10 +115,10 @@ export const PORTFOLIO: Portfolio = {
       loc: "Bengaluru, India",
       when: "Aug 2019 — Apr 2021",
       points: [
-        "Delivered new features for the campaign rules engine, enabling personalized reward programs and raising engagement <b>20%</b>.",
-        "Enhanced the Toll-Free Data Access system with C/C++ traffic monitoring, Redis session management, and Node.js reverse-proxy logic — improving reliability <b>25%</b>.",
-        "Built CI/CD pipelines with GitLab CI, Jenkins, and SonarQube — increasing deployment frequency <b>40%</b> and reducing production errors <b>30%</b>.",
-        "Integrated Prometheus and Grafana for real-time oversight, curtailing downtime <b>~35%</b>.",
+        "Delivered new features for the campaign rules engine, enabling personalized reward programs and raising engagement **20%**.",
+        "Enhanced the Toll-Free Data Access system with C/C++ traffic monitoring, Redis session management, and Node.js reverse-proxy logic — improving reliability **25%**.",
+        "Built CI/CD pipelines with GitLab CI, Jenkins, and SonarQube — increasing deployment frequency **40%** and reducing production errors **30%**.",
+        "Integrated Prometheus and Grafana for real-time oversight, curtailing downtime **~35%**.",
       ],
     },
   ],
@@ -134,31 +128,22 @@ export const PORTFOLIO: Portfolio = {
       title: "Swarm Intelligence Distributed Database",
       year: "2024",
       desc: "A scalable, fault-tolerant distributed database ingesting 10M+ IoT data points daily via Kafka and MongoDB sharding, with AI-driven query optimization using Ant Colony & Particle Swarm Optimization.",
-      metrics: [
-        { t: "99.99% uptime" },
-        { t: "+45% query perf" },
-        { t: "5× traffic spikes" },
-      ],
+      repo: "https://github.com/nishalcr/SwarmDB",
+      metrics: ["**99.99%** uptime", "**+45%** query perf", "**5×** traffic spikes"],
       stack: ["Kafka", "MongoDB", "Docker Swarm", "Prometheus", "Grafana"],
     },
     {
       title: "NetGuardian AI",
       year: "2024",
       desc: "End-to-end ML pipeline predicting severity of problematic internet use from 10,000+ hours of actigraphy time-series, using autoencoders and ensemble learning tuned with Quadratic Weighted Kappa.",
-      metrics: [
-        { t: "+20% accuracy" },
-        { t: "90%+ robustness" },
-      ],
+      metrics: ["**+20%** accuracy", "**90%+** robustness"],
       stack: ["Autoencoders", "scikit-learn", "Time-Series", "Ensemble Models"],
     },
     {
       title: "Serverless Face Recognition",
       year: "2024",
       desc: "An end-to-end serverless pipeline triggered by S3 uploads with Dockerized ffmpeg for frame extraction, deploying ResNet-34 via OpenCV for real-time inference on 1GB+ videos without managing servers.",
-      metrics: [
-        { t: "sub-500ms / frame" },
-        { t: "+30% throughput" },
-      ],
+      metrics: ["**sub-500ms** / frame", "**+30%** throughput"],
       stack: ["AWS Lambda", "S3", "Docker", "OpenCV", "ResNet-34"],
     },
   ],
