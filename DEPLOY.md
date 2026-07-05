@@ -24,7 +24,7 @@ git push
 4. **Save and Deploy.**
 
 Within ~1–2 minutes you have an **instant, shareable URL** like
-`https://nishalcr-portfolio.pages.dev`. Every `git push` auto-redeploys.
+`https://nishalcr.pages.dev`. Every `git push` auto-redeploys.
 
 > **You do NOT wait on is-a.dev to be live.** Use the `*.pages.dev` URL now;
 > attach the custom domain later (step 4) with zero redeploy.
@@ -57,15 +57,15 @@ dashboard connect in step 2, not both. To enable it, add two repo secrets:
    (Or GitHub → repo **Settings → Secrets and variables → Actions → New secret**.)
 
 The next push to `master` — or **Actions → Deploy to Cloudflare Pages → Run
-workflow** — deploys to `https://nishalcr-portfolio.pages.dev`.
+workflow** — deploys to `https://nishalcr.pages.dev`.
 
 > **If the first run errors with "project not found",** create the project once,
 > then re-run the workflow:
 > ```bash
-> npx wrangler pages project create nishalcr-portfolio --production-branch=master
+> npx wrangler pages project create nishalcr --production-branch=master
 > ```
 > (or dashboard → **Workers & Pages → Create → Pages → Direct Upload**, name it
-> `nishalcr-portfolio`). Later runs deploy into it normally.
+> `nishalcr`). Later runs deploy into it normally.
 
 > **Tip:** add the secrets *before* merging this workflow so the first
 > `master` deploy (the merge commit itself) is green rather than a red run.
@@ -86,7 +86,7 @@ workflow** — deploys to `https://nishalcr-portfolio.pages.dev`.
     "email": "nishalcr@gmail.com"
   },
   "records": {
-    "CNAME": "nishalcr-portfolio.pages.dev"
+    "CNAME": "nishalcr.pages.dev"
   }
 }
 ```

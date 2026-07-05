@@ -34,7 +34,7 @@ jobs:
         # Idempotent bootstrap: creates the project on the first run and is a
         # harmless no-op afterwards (`|| true` swallows the "already exists"
         # error). Auth errors still surface in the deploy step below.
-        run: npx --yes wrangler pages project create nishalcr-portfolio --production-branch=master || true
+        run: npx --yes wrangler pages project create nishalcr --production-branch=master || true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -48,4 +48,4 @@ jobs:
           # A push to master deploys production; a manual run from another branch
           # deploys a preview (Cloudflare treats master as the production branch).
           # First-time setup may need a one-time project create — see DEPLOY.md.
-          command: pages deploy out --project-name=nishalcr-portfolio --branch=${{ github.ref_name }}
+          command: pages deploy out --project-name=nishalcr --branch=${{ github.ref_name }}
