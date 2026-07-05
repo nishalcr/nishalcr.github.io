@@ -149,16 +149,76 @@ export const PORTFOLIO: Portfolio = {
   ],
 
   skills: [
-    { cat: "Languages", tags: ["Python", "Java", "JavaScript", "TypeScript", "Go", "C / C++", "Bash"] },
-    { cat: "Frameworks", tags: ["Spring Boot", "Node.js", "FastAPI", "React", "Next.js", "Vue.js", "Svelte", "GraphQL", "gRPC", "WebSockets"] },
-    { cat: "Cloud & DevOps", tags: ["AWS", "GCP", "Azure", "Docker", "Kubernetes", "Terraform", "Ansible", "GitHub Actions", "Jenkins", "Keycloak", "OAuth 2.0"] },
-    { cat: "AI / ML & Data", tags: ["LLMs", "Transformers", "TensorFlow", "PyTorch", "LangChain", "Pandas", "NumPy", "OpenCV"] },
-    { cat: "Databases", tags: ["PostgreSQL", "MySQL", "Cassandra", "MongoDB", "Neo4j", "Redis", "Elasticsearch"] },
-    { cat: "Observability", tags: ["Kafka", "Prometheus", "Grafana", "Kibana", "ELK Stack", "SonarQube"] },
+    {
+      cat: "Languages",
+      tags: ["Python", "Java", "JavaScript", "TypeScript", "Go", "C / C++", "Bash"],
+    },
+    {
+      cat: "Frameworks",
+      tags: [
+        "Spring Boot",
+        "Node.js",
+        "FastAPI",
+        "React",
+        "Next.js",
+        "Vue.js",
+        "Svelte",
+        "GraphQL",
+        "gRPC",
+        "WebSockets",
+      ],
+    },
+    {
+      cat: "Cloud & DevOps",
+      tags: [
+        "AWS",
+        "GCP",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "Ansible",
+        "GitHub Actions",
+        "Jenkins",
+        "Keycloak",
+        "OAuth 2.0",
+      ],
+    },
+    {
+      cat: "AI / ML & Data",
+      tags: [
+        "LLMs",
+        "Transformers",
+        "TensorFlow",
+        "PyTorch",
+        "LangChain",
+        "Pandas",
+        "NumPy",
+        "OpenCV",
+      ],
+    },
+    {
+      cat: "Databases",
+      tags: ["PostgreSQL", "MySQL", "Cassandra", "MongoDB", "Neo4j", "Redis", "Elasticsearch"],
+    },
+    {
+      cat: "Observability",
+      tags: ["Kafka", "Prometheus", "Grafana", "Kibana", "ELK Stack", "SonarQube"],
+    },
   ],
 
   education: [
-    { deg: "M.S. Computer Science", school: "Arizona State University", when: "2025", extra: "GPA 3.77" },
-    { deg: "B.E. Computer Science", school: "Bangalore Institute of Technology", when: "2019", extra: "GPA 3.8" },
+    {
+      deg: "M.S. Computer Science",
+      school: "Arizona State University",
+      when: "2025",
+      extra: "GPA 3.77",
+    },
+    {
+      deg: "B.E. Computer Science",
+      school: "Bangalore Institute of Technology",
+      when: "2019",
+      extra: "GPA 3.8",
+    },
   ],
 };

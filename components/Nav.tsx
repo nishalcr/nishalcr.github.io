@@ -56,7 +56,11 @@ export default function Nav() {
         <div className="nav-links">
           <span
             className="nav-indicator"
-            style={{ transform: `translateX(${ind.left}px)`, width: ind.width + "px", opacity: ind.on ? 1 : 0 }}
+            style={{
+              transform: `translateX(${ind.left}px)`,
+              width: ind.width + "px",
+              opacity: ind.on ? 1 : 0,
+            }}
           ></span>
           {links.map((x, i) => (
             <a

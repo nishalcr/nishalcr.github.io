@@ -1,8 +1,36 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
 
 type Theme = "dark" | "light";
+
+const listeners = new Set<() => void>();
+
+// The DOM (<html data-theme>) is the source of truth — the inline no-flash
+// script in layout.tsx sets it before paint. We read it via useSyncExternalStore
+// so the client reconciles to the real theme after hydration without a mismatch.
+function getSnapshot(): Theme {
+  return (document.documentElement.getAttribute("data-theme") as Theme) || "dark";
+}
+
+function getServerSnapshot(): Theme {
+  return "dark"; // SSR default; the script + client snapshot correct it on load
+}
+
+function subscribe(callback: () => void): () => void {
+  listeners.add(callback);
+  return () => listeners.delete(callback);
+}
+
+function setTheme(theme: Theme): void {
+  document.documentElement.setAttribute("data-theme", theme);
+  try {
+    localStorage.setItem("ncr-theme", theme);
+  } catch {
+    /* ignore (private mode / storage disabled) */
+  }
+  listeners.forEach((l) => l());
+}
 
 interface ThemeCtxValue {
   theme: Theme;
@@ -12,29 +40,7 @@ interface ThemeCtxValue {
 const ThemeCtx = createContext<ThemeCtxValue>({ theme: "dark", setTheme: () => {} });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Initialise to the SSR-safe default so the first client render matches the
-  // server HTML (no hydration mismatch). The inline no-flash script in the
-  // layout has already set the *visual* theme on <html> before paint.
-  const [theme, setThemeState] = useState<Theme>("dark");
-
-  // After mount, sync React state to whatever the no-flash script decided.
-  useEffect(() => {
-    const dom = (document.documentElement.getAttribute("data-theme") as Theme) || "dark";
-    if (dom !== theme) setThemeState(dom);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Apply + persist on every explicit change (also covers the initial sync).
-  const setTheme = (t: Theme) => {
-    setThemeState(t);
-    document.documentElement.setAttribute("data-theme", t);
-    try {
-      localStorage.setItem("ncr-theme", t);
-    } catch {
-      /* ignore */
-    }
-  };
-
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   return <ThemeCtx.Provider value={{ theme, setTheme }}>{children}</ThemeCtx.Provider>;
 }
 

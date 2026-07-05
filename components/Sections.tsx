@@ -2,18 +2,7 @@
 
 import { Fragment } from "react";
 import { PORTFOLIO as PD } from "@/lib/data";
-
-/* Render **bold** spans as real React nodes — safe (no dangerouslySetInnerHTML),
-   and lets content in data.ts stay plain text. */
-function RichText({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
-        i % 2 === 1 ? <b key={i}>{part}</b> : <Fragment key={i}>{part}</Fragment>
-      )}
-    </>
-  );
-}
+import { RichText } from "@/lib/richtext";
 
 function About() {
   return (
@@ -61,7 +50,9 @@ function About() {
                 >
                   <div>
                     <div style={{ fontSize: 15, color: "var(--text)" }}>{e.deg}</div>
-                    <div style={{ fontSize: 13, color: "var(--faint)", marginTop: 3 }}>{e.school}</div>
+                    <div style={{ fontSize: 13, color: "var(--faint)", marginTop: 3 }}>
+                      {e.school}
+                    </div>
                   </div>
                   <div
                     style={{
@@ -97,7 +88,8 @@ function Experience() {
             <div className="job reveal" key={i}>
               <div className="job-meta">
                 <div className="role-co">
-                  {String(i + 1).padStart(2, "0")} / {PD.experience.length.toString().padStart(2, "0")}
+                  {String(i + 1).padStart(2, "0")} /{" "}
+                  {PD.experience.length.toString().padStart(2, "0")}
                 </div>
                 <div className="when">{job.when}</div>
                 <div className="loc">{job.loc}</div>
@@ -141,48 +133,53 @@ function Projects() {
               ? `${pr.title} — open live demo`
               : `${pr.title} — view source on GitHub`;
             return (
-            <div className="proj reveal" key={i}>
-              <div className="proj-idx">/{String(i + 1).padStart(2, "0")}</div>
-              <div className="proj-main">
-                <h3>
-                  {href ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer" data-cursor={linkLabel}>
-                      {pr.title}
-                    </a>
-                  ) : (
-                    pr.title
-                  )}
-                </h3>
-                <span className="yr">{pr.year}</span>
-                <p>{pr.desc}</p>
-                <div className="metrics">
-                  {pr.metrics.map((m, j) => (
-                    <span className="metric" key={j}>
-                      <RichText text={m} />
+              <div className="proj reveal" key={i}>
+                <div className="proj-idx">/{String(i + 1).padStart(2, "0")}</div>
+                <div className="proj-main">
+                  <h3>
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-cursor={linkLabel}
+                      >
+                        {pr.title}
+                      </a>
+                    ) : (
+                      pr.title
+                    )}
+                  </h3>
+                  <span className="yr">{pr.year}</span>
+                  <p>{pr.desc}</p>
+                  <div className="metrics">
+                    {pr.metrics.map((m, j) => (
+                      <span className="metric" key={j}>
+                        <RichText text={m} />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="proj-stack">
+                  {pr.stack.map((s, j) => (
+                    <span className="chip" key={j}>
+                      {s}
                     </span>
                   ))}
                 </div>
+                {href ? (
+                  <a
+                    className="proj-arrow"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={linkAria}
+                    data-cursor={linkLabel}
+                  >
+                    ↗
+                  </a>
+                ) : null}
               </div>
-              <div className="proj-stack">
-                {pr.stack.map((s, j) => (
-                  <span className="chip" key={j}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-              {href ? (
-                <a
-                  className="proj-arrow"
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={linkAria}
-                  data-cursor={linkLabel}
-                >
-                  ↗
-                </a>
-              ) : null}
-            </div>
             );
           })}
         </div>
@@ -235,7 +232,11 @@ function Contact() {
           <a
             className="mail"
             href={`mailto:${PD.email}`}
-            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(20px,3vw,30px)", letterSpacing: "-0.01em" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(20px,3vw,30px)",
+              letterSpacing: "-0.01em",
+            }}
           >
             {PD.email}
           </a>
