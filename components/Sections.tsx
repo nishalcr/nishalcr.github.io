@@ -131,13 +131,22 @@ function Projects() {
           <div className="section-num">03 / 05</div>
         </div>
         <div className="proj-list">
-          {PD.projects.map((pr, i) => (
+          {PD.projects.map((pr, i) => {
+            // A live demo is the headline link when present; the repo otherwise.
+            // Either field enables the link — keeps the data.ts contract honest.
+            const href = pr.demo ?? pr.repo;
+            const isDemo = Boolean(pr.demo);
+            const linkLabel = isDemo ? "Live demo" : "GitHub";
+            const linkAria = isDemo
+              ? `${pr.title} — open live demo`
+              : `${pr.title} — view source on GitHub`;
+            return (
             <div className="proj reveal" key={i}>
               <div className="proj-idx">/{String(i + 1).padStart(2, "0")}</div>
               <div className="proj-main">
                 <h3>
-                  {pr.repo ? (
-                    <a href={pr.repo} target="_blank" rel="noopener noreferrer" data-cursor="GitHub">
+                  {href ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer" data-cursor={linkLabel}>
                       {pr.title}
                     </a>
                   ) : (
@@ -161,20 +170,21 @@ function Projects() {
                   </span>
                 ))}
               </div>
-              {pr.repo ? (
+              {href ? (
                 <a
                   className="proj-arrow"
-                  href={pr.repo}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${pr.title} — view source on GitHub`}
-                  data-cursor="GitHub"
+                  aria-label={linkAria}
+                  data-cursor={linkLabel}
                 >
                   ↗
                 </a>
               ) : null}
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -259,7 +269,10 @@ function Footer() {
       <button
         type="button"
         className="top-link"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={() => {
+          const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+        }}
       >
         Back to top <span>↑</span>
       </button>

@@ -7,11 +7,15 @@ import { useEffect } from "react";
    `.reveal` element once it enters the viewport. */
 export function useReveal() {
   useEffect(() => {
-    if (document.body.classList.contains("no-motion")) {
+    // Skip all scroll work when motion is unwanted: just show everything.
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || document.body.classList.contains("no-motion")) {
       document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
       return;
     }
+    let ticking = false;
     const reveal = () => {
+      ticking = false;
       const vh = window.innerHeight;
       document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
         const r = el.getBoundingClientRect();
@@ -21,13 +25,20 @@ export function useReveal() {
         if (r.top < vh && r.bottom > 0) el.classList.add("in");
       });
     };
+    // Coalesce scroll/resize bursts into one rAF-timed pass.
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(reveal);
+      }
+    };
     const raf = requestAnimationFrame(() => requestAnimationFrame(reveal));
-    window.addEventListener("scroll", reveal, { passive: true });
-    window.addEventListener("resize", reveal);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", reveal);
-      window.removeEventListener("resize", reveal);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, []);
 }
