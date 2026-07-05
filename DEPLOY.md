@@ -57,8 +57,18 @@ dashboard connect in step 2, not both. To enable it, add two repo secrets:
    (Or GitHub → repo **Settings → Secrets and variables → Actions → New secret**.)
 
 The next push to `master` — or **Actions → Deploy to Cloudflare Pages → Run
-workflow** — creates the `nishalcr-portfolio` project and deploys it to
-`https://nishalcr-portfolio.pages.dev`.
+workflow** — deploys to `https://nishalcr-portfolio.pages.dev`.
+
+> **If the first run errors with "project not found",** create the project once,
+> then re-run the workflow:
+> ```bash
+> npx wrangler pages project create nishalcr-portfolio --production-branch=master
+> ```
+> (or dashboard → **Workers & Pages → Create → Pages → Direct Upload**, name it
+> `nishalcr-portfolio`). Later runs deploy into it normally.
+
+> **Tip:** add the secrets *before* merging this workflow so the first
+> `master` deploy (the merge commit itself) is green rather than a red run.
 
 ## 3. Claim the free `is-a.dev` subdomain (runs in parallel — takes hours–days to merge)
 
