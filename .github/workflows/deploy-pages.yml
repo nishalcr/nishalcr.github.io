@@ -23,6 +23,9 @@ concurrency:
 
 jobs:
   build:
+    # Never deploy a non-master branch to the single Pages environment, even via
+    # a manual workflow_dispatch.
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

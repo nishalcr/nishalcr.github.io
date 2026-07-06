@@ -14,7 +14,9 @@ to **GitHub Pages** via `.github/workflows/deploy-pages.yml` on every push to
 Repo **Settings → Pages → Build and deployment → Source: `GitHub Actions`**.
 
 That's the only setting to flip — the workflow does the rest. Push to `master`
-(or **Actions → Deploy to GitHub Pages → Run workflow**) and it builds + deploys.
+(or **Actions → Deploy to GitHub Pages → Run workflow**, selecting the `master`
+branch) and it builds + deploys. The job is guarded to `master`, so a dispatch
+from any other branch is a no-op and can't overwrite production.
 
 The workflow bakes two files into the output:
 
@@ -28,8 +30,8 @@ and add **`domains/nishalcr.json`**:
 
 ```json
 {
-  "owner": { "username": "nishalcr", "email": "nishalcr@gmail.com" },
-  "records": { "CNAME": "nishalcr.github.io" }
+  "owner": { "username": "your-github-username", "email": "you@example.com" },
+  "records": { "CNAME": "your-github-username.github.io" }
 }
 ```
 
