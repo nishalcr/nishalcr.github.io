@@ -39,7 +39,7 @@ respects `prefers-reduced-motion` — all shipped as plain HTML/CSS/JS.
 | Fonts     | `next/font` — Instrument Serif, Manrope, JetBrains Mono |
 | Tests     | Vitest + Testing Library (unit), Playwright (e2e)       |
 | Quality   | ESLint (flat config) + Prettier                         |
-| CI/CD     | GitHub Actions → Cloudflare Pages                       |
+| CI/CD     | GitHub Actions → GitHub Pages                           |
 
 ## Project structure
 
@@ -85,7 +85,7 @@ a phrase in `**double asterisks**` for bold. To swap the résumé, overwrite
 
 ## Deployment
 
-Free on Cloudflare Pages with an `is-a.dev` subdomain — see **[DEPLOY.md](./DEPLOY.md)**.
+Free on GitHub Pages with an `is-a.dev` subdomain — see **[DEPLOY.md](./DEPLOY.md)**.
 
 ## License
 
