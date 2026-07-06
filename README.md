@@ -4,12 +4,12 @@ A fast, accessible, single-page developer portfolio built as a statically
 exported Next.js site. Dark/light theming, editorial typography, and motion that
 respects `prefers-reduced-motion` — all shipped as plain HTML/CSS/JS.
 
-[![CI](https://github.com/nishalcr/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/nishalcr/portfolio/actions/workflows/ci.yml)
+[![CI](https://github.com/nishalcr/nishalcr.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/nishalcr/nishalcr.github.io/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6.svg)](https://www.typescriptlang.org)
 
-**Live:** https://nishalcr.is-a.dev
+**Live:** https://nishalcr.github.io
 
 ![Portfolio — dark theme](.github/assets/preview-dark.png)
 

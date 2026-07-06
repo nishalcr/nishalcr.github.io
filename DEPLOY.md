@@ -1,61 +1,47 @@
 # Deploying this portfolio (free, GitHub Pages)
 
-The site is a **static export** (`next.config.mjs` → `output: "export"`), deployed
-to **GitHub Pages** via `.github/workflows/deploy-pages.yml` on every push to
-`master`. The custom domain is the free **`nishalcr.is-a.dev`** subdomain.
+This repo is named **`nishalcr.github.io`**, so GitHub Pages serves it as a
+**user site at the root**: **https://nishalcr.github.io**. The site is a static
+export (`next.config.mjs` → `output: "export"`) deployed by
+`.github/workflows/deploy-pages.yml` on every push to `master`.
 
-> Why GitHub Pages and not Cloudflare Pages? `is-a.dev` is hosted on Cloudflare,
-> and Cloudflare Pages refuses to attach a subdomain of a zone another account
-> owns (it demands a DNS transfer you can't do). is-a.dev's own docs recommend a
-> different host for this reason. GitHub Pages has no such conflict.
+Because it's served at the root (not a `/repo/` subpath), no `basePath` is needed
+and all assets resolve correctly.
 
-## 1. Enable GitHub Pages (one-time)
+## One-time setup
 
 Repo **Settings → Pages → Build and deployment → Source: `GitHub Actions`**.
+(Already enabled.) Then push to `master` — or **Actions → Deploy to GitHub Pages
+→ Run workflow** on `master` — and it builds + deploys. The job is guarded to
+`master`, so dispatching from another branch is a no-op.
 
-That's the only setting to flip — the workflow does the rest. Push to `master`
-(or **Actions → Deploy to GitHub Pages → Run workflow**, selecting the `master`
-branch) and it builds + deploys. The job is guarded to `master`, so a dispatch
-from any other branch is a no-op and can't overwrite production.
+## Optional: attach the `nishalcr.is-a.dev` custom domain
 
-The workflow bakes two files into the output:
+The GitHub Pages URL works on its own. To *also* serve the site at the free
+`nishalcr.is-a.dev` subdomain:
 
-- `.nojekyll` — so Jekyll doesn't drop Next's `_next/` folder.
-- `CNAME` (`nishalcr.is-a.dev`) — pins the custom domain across deploys.
+1. **Register it** — PR to `is-a-dev/register` adding `domains/nishalcr.json`:
 
-## 2. Claim the free `is-a.dev` subdomain
+   ```json
+   {
+     "owner": { "username": "your-github-username", "email": "you@example.com" },
+     "records": { "CNAME": "your-github-username.github.io" }
+   }
+   ```
 
-PR-reviewed, so open it early (hours–days to merge). Fork `is-a-dev/register`
-and add **`domains/nishalcr.json`**:
+2. **After that PR merges**, add the domain in repo **Settings → Pages → Custom
+   domain** → `nishalcr.is-a.dev`, tick **Enforce HTTPS**. GitHub writes a
+   `CNAME` file and serves the site at the custom domain (the `github.io` URL
+   then redirects to it).
 
-```json
-{
-  "owner": { "username": "your-github-username", "email": "you@example.com" },
-  "records": { "CNAME": "your-github-username.github.io" }
-}
-```
+3. **Point `SITE_URL`** in `lib/site.ts` at `https://nishalcr.is-a.dev` and
+   redeploy, so SEO/OG/canonical match the primary domain.
 
-Then open a PR to `is-a-dev/register`. On merge, DNS goes live in minutes.
+## SEO
 
-## 3. Point the custom domain (after the is-a.dev PR merges)
-
-The `CNAME` file already tells GitHub Pages the domain is `nishalcr.is-a.dev`.
-After the is-a.dev PR merges:
-
-1. Repo **Settings → Pages → Custom domain** should show `nishalcr.is-a.dev`
-   (from the CNAME file). Confirm it verifies, and tick **Enforce HTTPS**.
-2. *(Recommended)* Verify the domain to prevent takeover:
-   **GitHub → Settings → Pages → Add a domain** → follow the `TXT` prompt, then
-   add a second is-a.dev record file (`domains/<hostname>.nishalcr.json`) with
-   that `TXT` value. See docs.is-a.dev → GitHub Pages.
-
-Once DNS propagates, **https://nishalcr.is-a.dev** serves the site over HTTPS.
-
-## 4. SEO
-
-`lib/site.ts` is already set to `https://nishalcr.is-a.dev`, so metadata / OG /
-JSON-LD / sitemap / robots are correct the moment the domain goes live — no code
-change needed.
+`lib/site.ts` holds the canonical URL (metadata / OG / JSON-LD / sitemap /
+robots). It's set to the current live URL — update that one line if the primary
+URL changes.
 
 ---
 
