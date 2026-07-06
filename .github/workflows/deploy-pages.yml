@@ -36,11 +36,12 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Prepare Pages artifact
-        # .nojekyll: stop Jekyll from ignoring Next's _next/ folder.
-        # CNAME: pin the custom domain so it survives every Actions deploy.
-        run: |
-          touch out/.nojekyll
-          echo "nishalcr.is-a.dev" > out/CNAME
+        # .nojekyll stops Jekyll from ignoring Next's _next/ folder. No CNAME
+        # file: the site serves at the user-site root https://nishalcr.github.io.
+        # To attach the nishalcr.is-a.dev custom domain later, publish a CNAME
+        # file here — e.g. `echo "nishalcr.is-a.dev" > out/CNAME`. Actions-based
+        # Pages needs it in the artifact; the Settings value alone won't persist.
+        run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
