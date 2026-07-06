@@ -1,117 +1,66 @@
-# Deploying this portfolio (free)
+# Deploying this portfolio (free, GitHub Pages)
 
-The site is a **static export** (`next.config.mjs` → `output: "export"`), so it's
-just HTML/CSS/JS in `out/`. Any static host works. Recommended path below.
+The site is a **static export** (`next.config.mjs` → `output: "export"`), deployed
+to **GitHub Pages** via `.github/workflows/deploy-pages.yml` on every push to
+`master`. The custom domain is the free **`nishalcr.is-a.dev`** subdomain.
 
----
+> Why GitHub Pages and not Cloudflare Pages? `is-a.dev` is hosted on Cloudflare,
+> and Cloudflare Pages refuses to attach a subdomain of a zone another account
+> owns (it demands a DNS transfer you can't do). is-a.dev's own docs recommend a
+> different host for this reason. GitHub Pages has no such conflict.
 
-## 1. Push to GitHub
+## 1. Enable GitHub Pages (one-time)
 
-```bash
-git add -A
-git commit -m "Portfolio: content cleanup, self-hosted fonts, SEO, deploy prep"
-git push
-```
+Repo **Settings → Pages → Build and deployment → Source: `GitHub Actions`**.
 
-## 2. Deploy to Cloudflare Pages (recommended) — you get a live URL immediately
+That's the only setting to flip — the workflow does the rest. Push to `master`
+(or **Actions → Deploy to GitHub Pages → Run workflow**, selecting the `master`
+branch) and it builds + deploys. The job is guarded to `master`, so a dispatch
+from any other branch is a no-op and can't overwrite production.
 
-1. Go to **dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git**.
-2. Pick this repo.
-3. Build settings:
-   - **Framework preset:** `Next.js (Static HTML Export)` (or "None")
-   - **Build command:** `npx next build`
-   - **Output directory:** `out`
-4. **Save and Deploy.**
+The workflow bakes two files into the output:
 
-Within ~1–2 minutes you have an **instant, shareable URL** like
-`https://nishalcr.pages.dev`. Every `git push` auto-redeploys.
+- `.nojekyll` — so Jekyll doesn't drop Next's `_next/` folder.
+- `CNAME` (`nishalcr.is-a.dev`) — pins the custom domain across deploys.
 
-> **You do NOT wait on is-a.dev to be live.** Use the `*.pages.dev` URL now;
-> attach the custom domain later (step 4) with zero redeploy.
+## 2. Claim the free `is-a.dev` subdomain
 
-### Free alternatives (also give an instant URL)
-| Host | Instant URL | Notes |
-|------|-------------|-------|
-| **GitHub Pages** | `nishalcr.github.io` | Needs a small build Action; all-in-GitHub |
-| **Vercel** | `*.vercel.app` | Best Next DX; hobby tier is non-commercial only |
-| **Netlify** | `*.netlify.app` | Build `npx next build`, publish `out` |
-
-## 2b. Alternative: automated CI deploy (already wired up)
-
-`.github/workflows/deploy.yml` builds and deploys to Cloudflare Pages on every
-push to `master` — **no dashboard Git integration needed**. Use this OR the
-dashboard connect in step 2, not both. To enable it, add two repo secrets:
-
-1. **Create a Cloudflare API token** — dash.cloudflare.com → **My Profile →
-   API Tokens → Create Token** → use the **"Cloudflare Pages — Edit"** template →
-   Create. Copy the token.
-2. **Find your Account ID** — dash.cloudflare.com → **Workers & Pages** → the
-   **Account ID** is shown on the right (also in the dashboard URL).
-3. **Add both as GitHub secrets** (values are prompted, never echoed):
-
-   ```bash
-   gh secret set CLOUDFLARE_API_TOKEN     # paste the token
-   gh secret set CLOUDFLARE_ACCOUNT_ID    # paste the account id
-   ```
-
-   (Or GitHub → repo **Settings → Secrets and variables → Actions → New secret**.)
-
-The next push to `master` — or **Actions → Deploy to Cloudflare Pages → Run
-workflow** — deploys to `https://nishalcr.pages.dev`.
-
-> **If the first run errors with "project not found",** create the project once,
-> then re-run the workflow:
-> ```bash
-> npx wrangler pages project create nishalcr --production-branch=master
-> ```
-> (or dashboard → **Workers & Pages → Create → Pages → Direct Upload**, name it
-> `nishalcr`). Later runs deploy into it normally.
-
-> **Tip:** add the secrets *before* merging this workflow so the first
-> `master` deploy (the merge commit itself) is green rather than a red run.
-
-## 3. Claim the free `is-a.dev` subdomain (runs in parallel — takes hours–days to merge)
-
-`is-a.dev` is PR-reviewed, so open it early. It's **not instant**, but your
-`*.pages.dev` URL covers you until it merges.
-
-1. **Fork** `github.com/is-a-dev/register`.
-2. Add a file **`domains/nishalcr.json`** (fallback name: `domains/nishal.json`
-   if `nishalcr` is taken):
+PR-reviewed, so open it early (hours–days to merge). Fork `is-a-dev/register`
+and add **`domains/nishalcr.json`**:
 
 ```json
 {
-  "owner": {
-    "username": "nishalcr",
-    "email": "nishalcr@gmail.com"
-  },
-  "records": {
-    "CNAME": "nishalcr.pages.dev"
-  }
+  "owner": { "username": "your-github-username", "email": "you@example.com" },
+  "records": { "CNAME": "your-github-username.github.io" }
 }
 ```
 
-> Replace the CNAME value with your **actual** `*.pages.dev` target from step 2.
+Then open a PR to `is-a-dev/register`. On merge, DNS goes live in minutes.
 
-3. Open a **pull request** to `is-a-dev/register`. Follow their checklist exactly
-   (docs.is-a.dev) — incomplete PRs get rejected. On merge, DNS is live in minutes.
+## 3. Point the custom domain (after the is-a.dev PR merges)
 
-## 4. Attach the custom domain
+The `CNAME` file already tells GitHub Pages the domain is `nishalcr.is-a.dev`.
+After the is-a.dev PR merges:
 
-1. In **Cloudflare Pages → your project → Custom domains → Set up a custom domain**,
-   add `nishalcr.is-a.dev`. Cloudflare verifies the CNAME automatically.
-2. Done — `https://nishalcr.is-a.dev` now serves the site over HTTPS.
+1. Repo **Settings → Pages → Custom domain** should show `nishalcr.is-a.dev`
+   (from the CNAME file). Confirm it verifies, and tick **Enforce HTTPS**.
+2. *(Recommended)* Verify the domain to prevent takeover:
+   **GitHub → Settings → Pages → Add a domain** → follow the `TXT` prompt, then
+   add a second is-a.dev record file (`domains/<hostname>.nishalcr.json`) with
+   that `TXT` value. See docs.is-a.dev → GitHub Pages.
 
-## 5. One-line SEO switch
+Once DNS propagates, **https://nishalcr.is-a.dev** serves the site over HTTPS.
 
-`lib/site.ts` holds the canonical URL used by OG tags, JSON-LD, `sitemap.xml`,
-and `robots.txt`. It's already set to `https://nishalcr.is-a.dev`, so once step 3
-merges everything matches. If you want canonical to point at the `pages.dev` URL
-**while you wait**, edit that single line and redeploy.
+## 4. SEO
+
+`lib/site.ts` is already set to `https://nishalcr.is-a.dev`, so metadata / OG /
+JSON-LD / sitemap / robots are correct the moment the domain goes live — no code
+change needed.
 
 ---
 
 ## Updating content later
+
 - **Any text / bullets / projects / skills:** edit **`lib/data.ts`** only. Wrap a
   phrase in `**double asterisks**` for bold. No HTML, no escaping.
 - **New résumé:** overwrite **`public/resume.pdf`**. Nothing else changes.
