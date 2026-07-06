@@ -29,10 +29,12 @@ The GitHub Pages URL works on its own. To *also* serve the site at the free
    }
    ```
 
-2. **After that PR merges**, add the domain in repo **Settings → Pages → Custom
-   domain** → `nishalcr.is-a.dev`, tick **Enforce HTTPS**. GitHub writes a
-   `CNAME` file and serves the site at the custom domain (the `github.io` URL
-   then redirects to it).
+2. **After that PR merges**, publish a `CNAME` file in the deploy workflow — add
+   `echo "nishalcr.is-a.dev" > out/CNAME` back to the "Prepare Pages artifact"
+   step and push. (Actions-based Pages needs the `CNAME` **in the artifact**;
+   setting it only in Settings won't persist across deploys.) Then in
+   **Settings → Pages** confirm the custom domain shows `nishalcr.is-a.dev` and
+   tick **Enforce HTTPS**. The `github.io` URL then redirects to it.
 
 3. **Point `SITE_URL`** in `lib/site.ts` at `https://nishalcr.is-a.dev` and
    redeploy, so SEO/OG/canonical match the primary domain.
