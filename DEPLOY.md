@@ -1,8 +1,10 @@
 # Deploying this portfolio (free, GitHub Pages)
 
 This repo is named **`nishalcr.github.io`**, so GitHub Pages serves it as a
-**user site at the root**: **https://nishalcr.github.io**. The site is a static
-export (`next.config.mjs` → `output: "export"`) deployed by
+**user site at the root**, and it's bound to the free custom domain
+**https://nishalcr.is-a.dev** (registered via `is-a-dev/register`). The
+`github.io` URL redirects to it. The site is a static export
+(`next.config.mjs` → `output: "export"`) deployed by
 `.github/workflows/deploy-pages.yml` on every push to `master`.
 
 Because it's served at the root (not a `/repo/` subpath), no `basePath` is needed
@@ -15,29 +17,30 @@ Repo **Settings → Pages → Build and deployment → Source: `GitHub Actions`*
 → Run workflow** on `master` — and it builds + deploys. The job is guarded to
 `master`, so dispatching from another branch is a no-op.
 
-## Optional: attach the `nishalcr.is-a.dev` custom domain
+## Custom domain: `nishalcr.is-a.dev`
 
-The GitHub Pages URL works on its own. To *also* serve the site at the free
-`nishalcr.is-a.dev` subdomain:
+The site is bound to the free `nishalcr.is-a.dev` subdomain. This is already set
+up; the pieces that keep it working:
 
-1. **Register it** — PR to `is-a-dev/register` adding `domains/nishalcr.json`:
+1. **Registration** — `domains/nishalcr.json` in `is-a-dev/register` points the
+   subdomain at GitHub Pages:
 
    ```json
    {
-     "owner": { "username": "your-github-username", "email": "you@example.com" },
-     "records": { "CNAME": "your-github-username.github.io" }
+     "owner": { "username": "nishalcr", "email": "nishalcr@gmail.com" },
+     "records": { "CNAME": "nishalcr.github.io" }
    }
    ```
 
-2. **After that PR merges**, publish a `CNAME` file in the deploy workflow — add
-   `echo "nishalcr.is-a.dev" > out/CNAME` back to the "Prepare Pages artifact"
-   step and push. (Actions-based Pages needs the `CNAME` **in the artifact**;
-   setting it only in Settings won't persist across deploys.) Then in
-   **Settings → Pages** confirm the custom domain shows `nishalcr.is-a.dev` and
-   tick **Enforce HTTPS**. The `github.io` URL then redirects to it.
+2. **`CNAME` in the artifact** — the "Prepare Pages artifact" step writes
+   `echo "nishalcr.is-a.dev" > out/CNAME`. Actions-based Pages needs the `CNAME`
+   **in the artifact**; a value set only in Settings won't persist across
+   deploys. **Settings → Pages** also shows the custom domain and **Enforce
+   HTTPS** is on once GitHub provisions the TLS cert (a few minutes after the
+   first deploy carrying the `CNAME`).
 
-3. **Point `SITE_URL`** in `lib/site.ts` at `https://nishalcr.is-a.dev` and
-   redeploy, so SEO/OG/canonical match the primary domain.
+3. **`SITE_URL`** in `lib/site.ts` is `https://nishalcr.is-a.dev`, so
+   SEO/OG/canonical/sitemap/robots all use the primary domain.
 
 ## SEO
 
