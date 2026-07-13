@@ -71,7 +71,7 @@ export const PORTFOLIO: Portfolio = {
   role: "Software Engineer",
   role2: "Distributed Systems & AI",
   email: "nishalcr@gmail.com",
-  location: "Phoenix, AZ · Open to relocation",
+  location: "Phoenix, AZ",
   linkedin: "https://www.linkedin.com/in/nishalcr",
   github: "https://github.com/nishalcr",
   resume: "/resume.pdf",
