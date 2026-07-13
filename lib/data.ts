@@ -77,9 +77,9 @@ export const PORTFOLIO: Portfolio = {
   resume: "/resume.pdf",
 
   about: {
-    lead: "Software Engineer with 5 years building and owning production systems end to end — Java and Spring Boot microservices, Kafka event pipelines, and LLM extraction pipelines running on live traffic.",
+    lead: "Software Engineer with 5 years building and owning production systems end to end — Java and Spring Boot microservices, Kafka event pipelines and LLM extraction pipelines running on live traffic.",
     body: [
-      "I've led multi-service initiatives spanning six services and mentored engineers through architecture reviews. I'm comfortable at every layer — backend architecture, cloud infrastructure and IaC, and React front ends.",
+      "I've led multi-service initiatives spanning six services and mentored engineers through architecture reviews. I'm comfortable at every layer — backend architecture, cloud infrastructure and IaC and React front ends.",
       "M.S. in Computer Science from Arizona State University (2023–2025), with a track record of delivering reliable, high-performance software at scale.",
     ],
   },
@@ -93,8 +93,8 @@ export const PORTFOLIO: Portfolio = {
       points: [
         "Led the **GDPR erasure program** across six services — designed the specs and built a coordinator that fans a single deletion request out to idempotent erasure workers, backed by a MySQL state machine with per-household locks and single-active-request enforcement.",
         "Build and operate the **AI receipt-extraction platform**, a Node.js service on **ECS Fargate** that turns unstructured purchase emails into structured inventory records through a **Gemini** pipeline with vision OCR for PDF and image attachments.",
-        "Hardened the pipeline against LLM failure with a **four-tier fallback chain** — per-stage heuristic extractors, a config-swappable **Bedrock/Claude** path, and SQS re-queue with auto-requeue on provider recovery.",
-        "Shipped two production services solo: an **Alexa integration** service (request-signature verification, OAuth account linking, circuit breakers, its own Terraform IaC and CI/CD) and **EcohomeWeb**, a React 18 + Vite SPA. Also built the **eBay resale marketplace** in the core Express API — listing state machine, scheduled delist workers, and HMAC webhook verification.",
+        "Hardened the pipeline against LLM failure with a **four-tier fallback chain** — per-stage heuristic extractors, a config-swappable **Bedrock/Claude** path and SQS re-queue with auto-requeue on provider recovery.",
+        "Shipped two production services solo: an **Alexa integration** service (request-signature verification, OAuth account linking, circuit breakers, its own Terraform IaC and CI/CD) and **EcohomeWeb**, a React 18 + Vite SPA. Also built the **eBay resale marketplace** in the core Express API — listing state machine, scheduled delist workers and HMAC webhook verification.",
       ],
     },
     {
@@ -104,10 +104,10 @@ export const PORTFOLIO: Portfolio = {
       when: "May 2021 — Jul 2023",
       points: [
         "Drove the architectural redesign of the **MobiLytix Loyalty & Rewards** platform — decomposing a monolith into modular **Spring Boot** services along Domain-Driven Design bounded contexts and rebuilding the campaign console as a React SPA. Lifted throughput **60%** and feature delivery **35%**.",
-        "Built the service layer on **Spring Data JPA & Hibernate** over PostgreSQL, with Spring Cloud for centralized config and service discovery, Actuator metrics scraped by Prometheus, and Spring Security with **Keycloak** (OAuth 2.0 / JWT) enforcing role-based access across tenants.",
+        "Built the service layer on **Spring Data JPA & Hibernate** over PostgreSQL, with Spring Cloud for centralized config and service discovery, Actuator metrics scraped by Prometheus and Spring Security with **Keycloak** (OAuth 2.0 / JWT) enforcing role-based access across tenants.",
         "Architected event-driven **Kafka** pipelines for asynchronous inter-service communication, reliably processing **700K+** daily transactions at sub-200ms latency.",
         "Migrated the platform from on-prem to **AWS** SaaS — containerizing with Docker and Kubernetes and adding centralized ELK logging, cutting infrastructure cost **40%**.",
-        "Led a cross-functional team of five, running architecture reviews and mentoring, and standardized Maven multi-module builds with JUnit/Mockito coverage gates in CI.",
+        "Led a cross-functional team of five, running architecture reviews and mentoring and standardized Maven multi-module builds with JUnit/Mockito coverage gates in CI.",
       ],
     },
     {
@@ -116,9 +116,9 @@ export const PORTFOLIO: Portfolio = {
       loc: "Bengaluru, India",
       when: "Aug 2019 — Apr 2021",
       points: [
-        "Built the **Toll-Free Data Access** system — network traffic monitoring in C/C++, Redis-backed session management, and reverse-proxy routing in Node.js, serving zero-rated data access at carrier scale.",
-        "Shipped rule evaluation, eligibility logic, and reward fulfillment into the Java + **Spring Boot** campaign rules engine driving personalized reward programs.",
-        "Automated CI/CD with **GitLab CI, Jenkins, and SonarQube**, adding API contract tests and BDD — raising deployment frequency **40%** and reducing production errors **30%**.",
+        "Built the **Toll-Free Data Access** system — network traffic monitoring in C/C++, Redis-backed session management and reverse-proxy routing in Node.js, serving zero-rated data access at carrier scale.",
+        "Shipped rule evaluation, eligibility logic and reward fulfillment into the Java + **Spring Boot** campaign rules engine driving personalized reward programs.",
+        "Automated CI/CD with **GitLab CI, Jenkins and SonarQube**, adding API contract tests and BDD — raising deployment frequency **40%** and reducing production errors **30%**.",
         "Instrumented services with **Prometheus and Grafana** for real-time oversight.",
       ],
     },

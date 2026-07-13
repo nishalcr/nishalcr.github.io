@@ -43,9 +43,9 @@ export default function Hero() {
           </span>
         </h1>
         <p className="lead reveal d3">
-          I build and own production systems end to end — Java and Spring Boot microservices, Kafka
-          event pipelines, and LLM extraction pipelines on live traffic. Five years, comfortable at
-          every layer.
+          For five years I&apos;ve owned production systems end to end — architecting Java and
+          Spring Boot microservices, Kafka event pipelines and LLM extraction that handle real
+          traffic every day.
         </p>
         <div className="heroA-meta reveal d4">
           <span className="m">

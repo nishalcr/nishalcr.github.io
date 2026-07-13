@@ -29,7 +29,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 const title = `${P.name} — ${P.role}`;
 const description =
-  "Nishal Chandra Reddy — Software Engineer building production backend and distributed systems: Java & Spring Boot microservices, Kafka event pipelines, and LLM platforms on live traffic.";
+  "Nishal Chandra Reddy — Software Engineer building production backend and distributed systems: Java & Spring Boot microservices, Kafka event pipelines and LLM platforms on live traffic.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
