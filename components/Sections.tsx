@@ -265,7 +265,7 @@ function Footer() {
     <div className="footer">
       <div className="ft">© 2026 Nishal Chandra Reddy</div>
       <div className="ft" style={{ display: "flex", gap: 18, alignItems: "center" }}>
-        <span>Phoenix, AZ</span>
+        <span>United States</span>
       </div>
       <button
         type="button"

@@ -55,7 +55,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex" }}>Backend · Distributed Systems · LLM Platforms</div>
-        <div style={{ display: "flex" }}>Phoenix, AZ</div>
+        <div style={{ display: "flex" }}>United States</div>
       </div>
     </div>,
     { ...size }
