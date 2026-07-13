@@ -225,8 +225,8 @@ function Contact() {
         </div>
         <h2 className="reveal d1">Let&apos;s build something.</h2>
         <p className="blurb reveal d2">
-          Open to full-stack, backend, and AI/ML engineering roles. The fastest way to reach me is
-          email.
+          Open to backend, distributed-systems, and AI/LLM engineering roles. The fastest way to
+          reach me is email.
         </p>
         <div style={{ marginTop: 30 }} className="reveal d2">
           <a
@@ -265,7 +265,7 @@ function Footer() {
     <div className="footer">
       <div className="ft">© 2026 Nishal Chandra Reddy</div>
       <div className="ft" style={{ display: "flex", gap: 18, alignItems: "center" }}>
-        <span>United States</span>
+        <span>Phoenix, AZ</span>
       </div>
       <button
         type="button"

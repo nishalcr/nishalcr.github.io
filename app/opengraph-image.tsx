@@ -33,7 +33,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ width: 14, height: 14, borderRadius: 999, background: "#7fe08a" }} />
-        FULL STACK DEVELOPER · AI / ML
+        SOFTWARE ENGINEER · DISTRIBUTED SYSTEMS & AI
       </div>
 
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -54,8 +54,8 @@ export default function OpengraphImage() {
           color: "#9b9ba3",
         }}
       >
-        <div style={{ display: "flex" }}>Distributed systems · Microservices · AI</div>
-        <div style={{ display: "flex" }}>United States</div>
+        <div style={{ display: "flex" }}>Backend · Distributed Systems · LLM Platforms</div>
+        <div style={{ display: "flex" }}>Phoenix, AZ</div>
       </div>
     </div>,
     { ...size }
