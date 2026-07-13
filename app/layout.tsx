@@ -29,23 +29,26 @@ const jetbrainsMono = JetBrains_Mono({
 
 const title = `${P.name} — ${P.role}`;
 const description =
-  "Nishal Chandra Reddy — Full Stack Developer & AI/ML enthusiast. Scalable web applications, microservices, and distributed systems.";
+  "Nishal Chandra Reddy — Software Engineer building production backend and distributed systems: Java & Spring Boot microservices, Kafka event pipelines, and LLM platforms on live traffic.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title,
   description,
   keywords: [
-    "Full Stack Developer",
     "Software Engineer",
-    "AI/ML",
+    "Backend Engineer",
     "Distributed Systems",
     "Microservices",
+    "Java",
     "Spring Boot",
     "Node.js",
-    "React",
     "Kafka",
+    "LLM",
+    "AI/ML",
+    "React",
     "AWS",
+    "Terraform",
   ],
   authors: [{ name: P.name }],
   creator: P.name,
