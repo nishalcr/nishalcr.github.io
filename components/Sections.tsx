@@ -225,7 +225,7 @@ function Contact() {
         </div>
         <h2 className="reveal d1">Let&apos;s build something.</h2>
         <p className="blurb reveal d2">
-          Open to backend, distributed-systems, and AI/LLM engineering roles. The fastest way to
+          Open to backend, distributed-systems and AI/LLM engineering roles. The fastest way to
           reach me is email.
         </p>
         <div style={{ marginTop: 30 }} className="reveal d2">
