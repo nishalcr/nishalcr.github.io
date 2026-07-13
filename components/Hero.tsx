@@ -51,7 +51,6 @@ export default function Hero() {
           <span className="m">
             <span className="live"></span> Available for work
           </span>
-          <span className="m">Phoenix, AZ</span>
           <span className="m">5 years experience</span>
         </div>
         <div className="reveal d4">
